@@ -1,0 +1,73 @@
+<div class="form_item_block">
+	<div class="checkbox_row">
+        <input id="customizemsbuildpath" type="checkbox" ng-model="CustomizeMSBuildPath2" 
+        ng-init="CustomizeMSBuildPath2 = CustomizeMSBuildPath" ng-change="CustomizeMSBuildPath = CustomizeMSBuildPath2" ng-true-value="true" ng-false-value="false">
+        <input id="customizemsbuildpath2" type="hidden" ng-model="CustomizeMSBuildPath" value="{{CustomizeMSBuildPath}}">
+        <label for="customizemsbuildpath">Enter Custom Path to MSBuild.exe</label>
+    </div>
+</div>
+
+<div class="form_item_block" ng-show="CustomizeMSBuildPath">
+	<label>Path to MSBuild.exe on Agent:<span class="asterisk">*</span></label>
+	<input type="text" ng-model="MSBuildPath" style="float: left;" >
+</div>
+
+<div class="form_item_block"> 
+	<label>Solution File: <span class="asterisk">*</span></label>
+	<input type="text" ng-model="SolutionFile" ng-required="true" style="float: left;">
+	<span class="form_error" ng-show="GOINPUTNAME[SolutionFile].$error.server">{{ GOINPUTNAME[SolutionFile].$error.server }}</span>
+</div>
+
+<div class="form_item_block">
+    <label>Properties:</label>
+    <textarea ng-model="Properties" wrap="off" style="width: 250px; min-height:100px; resize: both; float: left;" cols="58" autocomplete="off"
+		placeholder="Place one entry per line, like 'name=value'">
+	</textarea>
+	<span class="form_error" ng-show="GOINPUTNAME[Properties].$error.server">{{ GOINPUTNAME[Properties].$error.server }}</span>
+</div>
+
+<div class="form_item_block">
+    <label>Verbosity:</label>
+    <select ng-model="Verbosity" style="float: left;" ng-required="true" style="float: left;">
+        <option value="quiet">Quiet</option>
+        <option value="minimal">Minimal</option>
+        <option value="" selected >Normal</option>
+		<option value="detailed">Detailed</option>
+		<option value="diagnostic">Diagnostic</option>
+    </select>
+</div>
+
+<div class="form_item_block">
+	<div class="checkbox_row">
+		<input id="specifytargets2" type="checkbox" ng-model="SpecifyTargets2" ng-init="SpecifyTargets2 = SpecifyTargets" ng-change="SpecifyTargets = SpecifyTargets2" ng-true-value="true" ng-false-value="false">
+        <input id="specifytargets" type="hidden" ng-model="SpecifyTargets" value="{{SpecifyTargets}}">
+		<label>Specify Target(s)?</label>
+	</div>
+</div>
+
+<div class="form_item_block"  ng-show="SpecifyTargets">
+    <label>Targets: <span class="asterisk">*</span></label>
+    <textarea ng-model="Targets" wrap="off" style="width: 250px; min-height:100px; resize: both; float: left;" cols="58" autocomplete="off"
+		placeholder="Comma separated list of targets: \ntarget1,target2,target3...">
+	</textarea>
+	<span class="form_error" ng-show="GOINPUTNAME[Targets].$error.server">{{ GOINPUTNAME[Targets].$error.server }}</span>
+</div>
+
+<div class="form_item_block">
+    <label>Additional options:</label>
+	<div class="checkbox_row">
+        <input id="detailedsummary2" type="checkbox" ng-model="DetailedSummary2" ng-init="DetailedSummary2 = DetailedSummary" ng-change="DetailedSummary = DetailedSummary2" ng-true-value="true" ng-false-value="false">
+        <input id="detailedsummary" type="hidden" ng-model="DetailedSummary" value="{{DetailedSummary}}">
+        <label for="detailedsummary">Show detailed summary</label>
+    </div>
+	<div class="checkbox_row">
+        <input id="nologo2" type="checkbox" ng-model="NoLogo2" ng-init="NoLogo2 = NoLogo" ng-change="NoLogo = NoLogo2" ng-true-value="true" ng-false-value="false">
+        <input id="nologo" type="hidden" ng-model="NoLogo" value="{{NoLogo}}">
+        <label for="nologo">Start MSBuild without logo</label>
+    </div>
+	<div class="checkbox_row">
+        <input id="noautoresponse2" type="checkbox" ng-model="NoAutoResponse2" ng-init="NoAutoResponse2 = NoAutoResponse" ng-change="NoAutoResponse = NoAutoResponse2" ng-true-value="true" ng-false-value="false">
+        <input id="noautoresponse" type="hidden" ng-model="NoAutoResponse" value="{{NoAutoResponse}}">
+        <label for="noautoresponse">Don't automatically include MSBuild.rsp files</label>
+    </div>
+	
