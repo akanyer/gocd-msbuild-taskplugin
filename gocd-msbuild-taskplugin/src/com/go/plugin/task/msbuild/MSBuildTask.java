@@ -76,7 +76,7 @@ public class MSBuildTask implements Task {
         String customizemsbuildpath = configuration.getValue(CUSTOMIZEMSBUILDPATH);
         if(customizemsbuildpath != null && customizemsbuildpath.equals("true")) {
         	String msbuildpath = configuration.getValue(MSBUILDPATH);
-        	if(StringUtils.isBlank(msbuildpath)) {
+        	if(msbuildpath == null || StringUtils.isBlank(msbuildpath)) {
         		validationResult.addError(new ValidationError(MSBUILDPATH, "Path to MSBuild.exe must be specified"));
         	}
         }
@@ -103,12 +103,10 @@ public class MSBuildTask implements Task {
     }
     
     protected boolean propertiesValid(String properties){
-    	//split properties on newline
-    	String props[] = properties.split("\\r?\\n");
-    	Pattern regex = Pattern.compile("\\w+=\\w+");
+    	String props[] = properties.split("\\r?\\n"); //split properties on newline
+    	Pattern regex = Pattern.compile("\\w+=\\w+"); //properties specified like 'propname=propvalue'
     	for(String prop : props) {
-    		//strip all whitespace
-    		prop = prop.replaceAll("\\s", ""); 
+    		prop = prop.replaceAll("\\s", ""); //strip all whitespace from property
     		Matcher matcher = regex.matcher(prop);
     		
     		if(!matcher.matches()) 

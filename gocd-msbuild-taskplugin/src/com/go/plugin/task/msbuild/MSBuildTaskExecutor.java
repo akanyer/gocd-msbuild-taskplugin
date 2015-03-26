@@ -12,16 +12,14 @@ public class MSBuildTaskExecutor implements TaskExecutor {
 
     @Override
     public ExecutionResult execute(TaskConfig taskConfig, TaskExecutionContext taskExecutionContext) {
-        ProcessBuilder powershell = createMSBuildCommand(taskExecutionContext, taskConfig);
+        ProcessBuilder msbuild = createMSBuildCommand(taskExecutionContext, taskConfig);
 
         Console console = taskExecutionContext.console();
-        console.printLine("Launching command: " + StringUtils.join(powershell.command(), " "));
+        console.printLine("Launching command: " + StringUtils.join(msbuild.command(), " "));
 
         try {
-            Process process = powershell.start();
-
-            //PutScriptIntoPowershellStdin(taskExecutionContext, taskConfig, process);
-
+            Process process = msbuild.start();
+            
             console.readErrorOf(process.getErrorStream());
             console.readOutputOf(process.getInputStream());
 

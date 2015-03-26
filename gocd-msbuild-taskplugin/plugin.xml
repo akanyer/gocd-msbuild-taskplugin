@@ -11,6 +11,7 @@
                         </vendor>
                         <target-os>
                             <value>Windows</value>
+                            <value>Linux</value>
                         </target-os>
                     </about>
                 </go-plugin>
