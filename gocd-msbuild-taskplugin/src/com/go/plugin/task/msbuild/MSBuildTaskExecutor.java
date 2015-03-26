@@ -44,11 +44,10 @@ public class MSBuildTaskExecutor implements TaskExecutor {
         String msBuildPath = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\MSBuild.exe";
 
         List<String> command = new ArrayList<String>();
-        /**if(taskConfig.getValue(MSBuildTask.CUSTOMIZEMSBUILDPATH).equals("true")) {
+        String customizeMSBuildPath = taskConfig.getValue(MSBuildTask.CUSTOMIZEMSBUILDPATH);
+        if(customizeMSBuildPath != null && customizeMSBuildPath.equals("true")) {
         	msBuildPath = taskConfig.getValue(MSBuildTask.MSBUILDPATH);
         }
-        **/
-        msBuildPath = taskConfig.getValue(MSBuildTask.MSBUILDPATH);
         command.add(msBuildPath);
         
         AddMSBuildArguments(taskConfig, command);

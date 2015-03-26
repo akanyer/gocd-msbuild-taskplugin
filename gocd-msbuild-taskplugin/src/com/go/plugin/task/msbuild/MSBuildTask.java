@@ -73,13 +73,13 @@ public class MSBuildTask implements Task {
     public ValidationResult validate(TaskConfig configuration) {
         ValidationResult validationResult = new ValidationResult();
         
-        //String customizemsbuildpath = configuration.getValue(CUSTOMIZEMSBUILDPATH);
-        //if(customizemsbuildpath.equals("true")) {
+        String customizemsbuildpath = configuration.getValue(CUSTOMIZEMSBUILDPATH);
+        if(customizemsbuildpath != null && customizemsbuildpath.equals("true")) {
         	String msbuildpath = configuration.getValue(MSBUILDPATH);
         	if(StringUtils.isBlank(msbuildpath)) {
         		validationResult.addError(new ValidationError(MSBUILDPATH, "Path to MSBuild.exe must be specified"));
         	}
-        //}
+        }
         
         String solutionfile = configuration.getValue(SOLUTIONFILE);
         if (StringUtils.isBlank(solutionfile)) {

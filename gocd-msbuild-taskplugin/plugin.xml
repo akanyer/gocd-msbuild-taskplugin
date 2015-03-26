@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+                <go-plugin id="rwbaird.msbuildplugin" version="1.2.0">
+                    <about>
+                        <name>MSBuild Task Plugin</name>
+                        <version>1.2.0</version>
+                        <target-go-version>12.4</target-go-version>
+                        <description>Task to run MSBuild based builds</description>
+                        <vendor>
+                            <name>Andrew Kanyer</name> 
+                            <url>www.rwbaird.com</url>
+                        </vendor>
+                        <target-os>
+                            <value>Windows</value>
+                        </target-os>
+                    </about>
+                </go-plugin>
