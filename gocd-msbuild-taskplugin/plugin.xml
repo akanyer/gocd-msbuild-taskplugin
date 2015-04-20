@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-                <go-plugin id="rwbaird.msbuildplugin" version="1.2.1">
+                <go-plugin id="rwbaird.msbuildplugin" version="1.2.2">
                     <about>
                         <name>MSBuild Task Plugin</name>
                         <version>1.2.0</version>
@@ -11,7 +11,6 @@
                         </vendor>
                         <target-os>
                             <value>Windows</value>
-                            <value>Linux</value>
                         </target-os>
                     </about>
                 </go-plugin>

@@ -15,6 +15,9 @@ public class MSBuildTaskExecutor implements TaskExecutor {
         ProcessBuilder msbuild = createMSBuildCommand(taskExecutionContext, taskConfig);
 
         Console console = taskExecutionContext.console();
+        console.printLine("-------------------------------------------------------------------------------");
+        console.printLine("|                         Starting MS Build Task                              |");
+        console.printLine("-------------------------------------------------------------------------------");
         console.printLine("Launching command: " + StringUtils.join(msbuild.command(), " "));
 
         try {
