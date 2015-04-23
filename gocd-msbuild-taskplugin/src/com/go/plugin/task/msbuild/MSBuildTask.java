@@ -7,6 +7,7 @@ import com.thoughtworks.go.plugin.api.task.Task;
 import com.thoughtworks.go.plugin.api.task.TaskConfig;
 import com.thoughtworks.go.plugin.api.task.TaskExecutor;
 import com.thoughtworks.go.plugin.api.task.TaskView;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -22,10 +23,12 @@ public class MSBuildTask implements Task {
     public static final String VERBOSITY = "Verbosity";
     public static final String SPECIFYTARGETS = "SpecifyTargets";
     public static final String TARGETS = "Targets";
+    public static final String ADDITIONALPARAMETERS = "AdditionalParameters";
     public static final String DETAILEDSUMMARY = "DetailedSummary";
     public static final String NOLOGO = "NoLogo";
     public static final String NOAUTORESPONSE = "NoAutoResponse";
-
+    public static final String FILELOGGER = "FileLogger";
+    
     @Override
     public TaskConfig config() {
         TaskConfig config = new TaskConfig();
@@ -37,10 +40,13 @@ public class MSBuildTask implements Task {
         config.addProperty(VERBOSITY);
         config.addProperty(SPECIFYTARGETS);
         config.addProperty(TARGETS);
+        config.addProperty(ADDITIONALPARAMETERS);
         
+        config.addProperty(FILELOGGER);
         config.addProperty(DETAILEDSUMMARY);
         config.addProperty(NOLOGO);
         config.addProperty(NOAUTORESPONSE);
+        
         return config;
     }
 
@@ -99,6 +105,14 @@ public class MSBuildTask implements Task {
         	}
         }
         
+        String additionalParams = configuration.getValue(ADDITIONALPARAMETERS);
+    	String splitParams[] = additionalParams.split("[\r\n]+"); 
+    	for(String param : splitParams){
+    		param = param.replaceAll("\\s+", "");
+    		if(!(param.charAt(0) == '/')) {
+    			validationResult.addError(new ValidationError(ADDITIONALPARAMETERS, "Parameters must start with forward slash: /parameter:value"));
+    		}
+    	}
         return validationResult;
     }
     

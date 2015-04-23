@@ -54,7 +54,20 @@
 </div>
 
 <div class="form_item_block">
+    <label>Additional Parameters: </label>
+    <textarea ng-model="AdditionalParameters" wrap="off" style="width: 250px; min-height:100px; resize: both; float: left;" cols="58" autocomplete="off"
+		placeholder="Place one per line: /ParameterName=ParamValue">
+	</textarea>
+	<span class="form_error" ng-show="GOINPUTNAME[Targets].$error.server">{{ GOINPUTNAME[Targets].$error.server }}</span>
+</div>
+
+<div class="form_item_block">
     <label>Additional options:</label>
+	<div class="checkbox_row">
+        <input id="filelogger2" type="checkbox" ng-model="FileLogger2" ng-init="FileLogger2 = FileLogger" ng-change="FileLogger = FileLogger2" ng-true-value="true" ng-false-value="false">
+        <input id="filelogger" type="hidden" ng-model="FileLogger" value="{{FileLogger}}">
+        <label for="filelogger">Enable File Logger (logs to MSBuild.log in current directory)</label>
+    </div>
 	<div class="checkbox_row">
         <input id="detailedsummary2" type="checkbox" ng-model="DetailedSummary2" ng-init="DetailedSummary2 = DetailedSummary" ng-change="DetailedSummary = DetailedSummary2" ng-true-value="true" ng-false-value="false">
         <input id="detailedsummary" type="hidden" ng-model="DetailedSummary" value="{{DetailedSummary}}">
@@ -70,4 +83,4 @@
         <input id="noautoresponse" type="hidden" ng-model="NoAutoResponse" value="{{NoAutoResponse}}">
         <label for="noautoresponse">Don't automatically include MSBuild.rsp files</label>
     </div>
-	
+</div>	

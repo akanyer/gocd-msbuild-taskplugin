@@ -42,9 +42,10 @@ public class MSBuildTaskExecutor implements TaskExecutor {
     }
 
     ProcessBuilder createMSBuildCommand(TaskExecutionContext taskContext, TaskConfig taskConfig) {
-        String msBuildPath = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\MSBuild.exe";
 
         List<String> command = new ArrayList<String>();
+
+        String msBuildPath = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\MSBuild.exe";
         String customizeMSBuildPath = taskConfig.getValue(MSBuildTask.CUSTOMIZEMSBUILDPATH);
         if(customizeMSBuildPath != null && customizeMSBuildPath.equals("true")) {
         	msBuildPath = taskConfig.getValue(MSBuildTask.MSBUILDPATH);
@@ -52,6 +53,7 @@ public class MSBuildTaskExecutor implements TaskExecutor {
         command.add(msBuildPath);
         
         AddMSBuildArguments(taskConfig, command);
+        AddAdditionalParameters(taskConfig, command);
         AddProjectFile(taskConfig, command);
 
         ProcessBuilder processBuilder = new ProcessBuilder(command);
@@ -67,13 +69,6 @@ public class MSBuildTaskExecutor implements TaskExecutor {
 
     private void AddMSBuildArguments(TaskConfig taskConfig, List<String> command) {
         String rawProperties = taskConfig.getValue(MSBuildTask.PROPERTIES);
-        String verbosity = taskConfig.getValue(MSBuildTask.VERBOSITY);
-        String specifyTargets = taskConfig.getValue(MSBuildTask.SPECIFYTARGETS);
-        
-    	String detailedSummary = taskConfig.getValue(MSBuildTask.DETAILEDSUMMARY);
-        String noLogo = taskConfig.getValue(MSBuildTask.NOLOGO);
-        String noAutoResponse = taskConfig.getValue(MSBuildTask.NOAUTORESPONSE);
-
         if(rawProperties != null && !StringUtils.isEmpty(rawProperties)) {
         	//split props by line
         	String properties[] = rawProperties.split("[\r\n]+"); 
@@ -84,12 +79,14 @@ public class MSBuildTaskExecutor implements TaskExecutor {
         	}
         }
         
+        String verbosity = taskConfig.getValue(MSBuildTask.VERBOSITY);
         if(verbosity != null && !StringUtils.isEmpty(verbosity)) {
         	command.add("/verbosity:" + verbosity);
         } else {
         	command.add("/verbosity:normal");
         }
         
+        String specifyTargets = taskConfig.getValue(MSBuildTask.SPECIFYTARGETS);
         if(specifyTargets != null && specifyTargets.equals("true")) {
         	String targets = taskConfig.getValue(MSBuildTask.TARGETS);
         	if(targets != null &&  !StringUtils.isEmpty(targets)) {
@@ -98,14 +95,34 @@ public class MSBuildTaskExecutor implements TaskExecutor {
         	}
         }
         
+        String fileLogger = taskConfig.getValue(MSBuildTask.FILELOGGER);
+        if (fileLogger != null && fileLogger.equals("true")) {
+            command.add("/fileLogger");
+        }
+        
+        String detailedSummary = taskConfig.getValue(MSBuildTask.DETAILEDSUMMARY);
         if (detailedSummary != null && detailedSummary.equals("true")) {
             command.add("/detailedsummary");
         }
+        
+        String noLogo = taskConfig.getValue(MSBuildTask.NOLOGO);
         if (noLogo != null && noLogo.equals("true")) {
             command.add("/nologo");
         }
+        
+        String noAutoResponse = taskConfig.getValue(MSBuildTask.NOAUTORESPONSE);
         if (noAutoResponse != null && noAutoResponse.equals("true")) {
             command.add("/noautoResponse");
         }
+    }
+    
+    private void AddAdditionalParameters(TaskConfig taskConfig, List<String> command) {
+    	String additionalParams = taskConfig.getValue(MSBuildTask.ADDITIONALPARAMETERS);
+    	String splitParams[] = additionalParams.split("[\r\n]+"); 
+    	for(String param : splitParams){
+    		//strip any whitespace from parameter leaving only 'propertyName'='value'
+    		param = param.replaceAll("\\s+", ""); 
+    		command.add(param);
+    	}
     }
 }
