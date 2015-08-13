@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-                <go-plugin id="rwbaird.msbuildplugin" version="1.2.3">
+                <go-plugin id="rwbaird.msbuildplugin" version="1.3.0">
                     <about>
                         <name>MSBuild Task Plugin</name>
-                        <version>1.2.3</version>
+                        <version>1.3.1</version>
                         <target-go-version>12.4</target-go-version>
                         <description>Task to run MSBuild based builds</description>
                         <vendor>

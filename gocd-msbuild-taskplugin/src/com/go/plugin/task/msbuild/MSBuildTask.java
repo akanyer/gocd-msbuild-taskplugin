@@ -28,6 +28,7 @@ public class MSBuildTask implements Task {
     public static final String NOLOGO = "NoLogo";
     public static final String NOAUTORESPONSE = "NoAutoResponse";
     public static final String FILELOGGER = "FileLogger";
+    public static final String WORKINGDIRECTORY = "WorkingDirectory";
     
     @Override
     public TaskConfig config() {
@@ -46,6 +47,7 @@ public class MSBuildTask implements Task {
         config.addProperty(DETAILEDSUMMARY);
         config.addProperty(NOLOGO);
         config.addProperty(NOAUTORESPONSE);
+        config.addProperty(WORKINGDIRECTORY);
         
         return config;
     }
@@ -106,12 +108,14 @@ public class MSBuildTask implements Task {
         }
         
         String additionalParams = configuration.getValue(ADDITIONALPARAMETERS);
-    	String splitParams[] = additionalParams.split("[\r\n]+"); 
-    	for(String param : splitParams){
-    		param = param.replaceAll("\\s+", "");
-    		if(!(param.charAt(0) == '/')) {
-    			validationResult.addError(new ValidationError(ADDITIONALPARAMETERS, "Parameters must start with forward slash: /parameter:value"));
-    		}
+    	if(additionalParams != null && !additionalParams.isEmpty()) {
+	    	String splitParams[] = additionalParams.split("[\r\n]+"); 
+	    	for(String param : splitParams){
+	    		param = param.replaceAll("\\s+", "");
+	    		if(!(param.charAt(0) == '/')) {
+	    			validationResult.addError(new ValidationError(ADDITIONALPARAMETERS, "Parameters must start with forward slash: /parameter:value"));
+	    		}
+	    	}
     	}
         return validationResult;
     }
